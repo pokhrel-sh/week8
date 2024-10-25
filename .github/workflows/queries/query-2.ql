@@ -10,8 +10,7 @@ predicate isTest(Function test) {
 
 // find all public methods that are not called by any test
 predicate isPublicMethod(Function f) {
-  f.isPublic() and
-  not exists(Function test | isTest(test) and test.getName() = f.getName())
+  exists(MethodDefinition md | md.isPublic() and md.getBody() = f)
 }
 
 predicate isExportedFunction(Function f) {
