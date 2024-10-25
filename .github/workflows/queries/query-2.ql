@@ -2,9 +2,11 @@ import javascript
 
 // find all public methods that are called by tests
 predicate isTest(Function test) {
-  exists(CallExpr call |
-    call.getCallee().getName() = test.getName() and
-    call.getAncestor*() = test
+  exists(CallExpr describe, CallExpr it |
+    describe.getCalleeName() = "describe" and
+    it.getCalleeName() = "it" and
+    it.getParent*() = describe and
+    test = it.getArgument(1)
   )
 }
 

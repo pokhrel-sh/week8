@@ -7,9 +7,11 @@ predicate isLongFunction(Function f) {
 
 // find tests that call a function called "pressActionKey" (hint: you can call getName() on a Function node to get its name, if it has one)
 predicate isTest(Function test) {
-  exists(CallExpr call |
-    call.getCallee().getName() = "pressActionKey" and
-    call.getAncestor*() = test
+  exists(CallExpr describe, CallExpr it |
+    describe.getCalleeName() = "describe" and
+    it.getCalleeName() = "it" and
+    it.getParent*() = describe and
+    test = it.getArgument(1)
   )
 }
 
