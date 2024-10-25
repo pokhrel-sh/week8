@@ -19,5 +19,5 @@ predicate isExportedFunction(Function f) {
 }
 
 from Function f
-where isPublicMethod(f) and isExportedFunction(f)
+where isPublicMethod(f) and isExportedFunction(f) and not isTest(f)
 select f, "is a public method that is not called by any test"
